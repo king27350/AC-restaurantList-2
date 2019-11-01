@@ -13,7 +13,7 @@ $npm install
 ```
 3. 開啟環境執行SERVER
 ```
-$node run dev
+$npm run dev
 ```
 4. 開啟網頁網址輸入
 ```
