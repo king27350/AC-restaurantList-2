@@ -1,17 +1,14 @@
 const express = require('express')
 const app = express()
 const port = 3000
-
-//require express-handlebars
 const exphbs = require('express-handlebars')
-//require restaurant json
-const restaurantList = require('./restaurant.json')
-//require restaurant model
-const Restaurant = require('./models/restaurant')
 // require mongoose
 const mongoose = require('mongoose')
+
 mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
+//require restaurant model
+const Restaurant = require('./models/restaurant')
 // connect err
 db.on('error', () => {
   console.log('mongodb error !')
@@ -20,6 +17,7 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('mongodb connected !')
 })
+
 //setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -28,22 +26,44 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 // routes setting
+// 餐廳首頁
 app.get('/', (req, res) => {
-  res.render('index', { restaurants: restaurantList.results })
+  Restaurant.find((err, restaurants) => {
+    if (err) return console.error(err)
+    return res.render('index', { restaurants: restaurants })
+  })
 })
-
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  //console.log(req.params.restaurant_id)
-  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant: restaurant })
+// 列出全部 餐廳
+app.get('/restaurants', (req, res) => {
+  return res.redirect('/')
+})
+// 新增一筆 餐廳 頁面
+app.get('/restaurants/new', (req, res) => {
+  res.send('新增 Todo 頁面')
+})
+// 顯示一筆 餐廳 的詳細內容
+app.get('/restaurants/:id', (req, res) => {
+  res.send('顯示 Todo 的詳細內容')
+})
+// 新增一筆  餐廳
+app.post('/restaurants', (req, res) => {
+  res.send('建立 Todo')
+})
+// 修改 餐廳 頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  res.send('修改 Todo 頁面')
+})
+// 修改 餐廳
+app.post('/restaurants/:id/edit', (req, res) => {
+  res.send('修改 Todo')
+})
+// 刪除 餐廳
+app.post('/restaurants/:id/delete', (req, res) => {
+  res.send('刪除 Todo')
 })
 
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const restaurants = restaurantList.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase())
-  })
-  res.render('index', { restaurants: restaurants, keyword: keyword })
+  res.send('search page')
 })
 
 app.listen(port, () => {
