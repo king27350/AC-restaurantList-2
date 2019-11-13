@@ -39,7 +39,9 @@
               </span>
               <a href="/restaurants/{{this.id}}/edit">Edit</a>
               <a href="/restaurants/{{this.id}}">Detail</a>
-              <button class="btn-sm btn-light">delete</button>
+              <form action="/restaurants/{{this.id}}/delete" method="POST" style="display: inline;">
+                <button class="btn-sm btn-light">delete</button>
+              </form>
             </div>
           </div>
         </a>
