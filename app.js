@@ -38,6 +38,27 @@ app.get('/', (req, res) => {
 app.get('/restaurants', (req, res) => {
   return res.redirect('/')
 })
+//列出分類後餐廳
+app.get('/restaurants/sort/:sort', (req, res) => {
+  console.log(req.params.sort)
+  if (!req.params.sort === Number) {
+    Restaurant.find({})
+      .sort({ name: `${req.params.sort}` })
+      .exec((err, restaurants) => {
+        if (err) return console.error(err)
+        return res.render('index', { restaurants: restaurants })
+      })
+  } else {
+    Restaurant.find({})
+      .sort({ rating: `${req.params.sort}` })
+      .exec((err, restaurants) => {
+        if (err) return console.error(err)
+        return res.render('index', { restaurants: restaurants })
+      })
+  }
+
+})
+
 // 新增一筆 餐廳 頁面
 app.get('/restaurants/new', (req, res) => {
   return res.render('new')

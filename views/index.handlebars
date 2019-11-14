@@ -9,6 +9,20 @@
             value="{{ keyword }}" aria-describedby="search-button">
           <div class="input-group-append">
             <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+
+            <div class="dropdown btn-sort">
+              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/restaurants/sort/asc">A-Z</a>
+                <a class="dropdown-item" href="/restaurants/sort/desc">Z-A</a>
+                <a class="dropdown-item" href="/restaurants/sort/-1">Rate Higher</a>
+                <a class="dropdown-item" href="/restaurants/sort/1">Rate Lower</a>
+              </div>
+            </div>
+
           </div>
         </div>
       </form>

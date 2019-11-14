@@ -40,6 +40,10 @@ header {
   font-size: 0.8rem;
 }
 
+.btn-sort {
+  margin-left: 5px;
+}
+
 .btn-major {
   background-color: #9b4b4b;
   color: white;
