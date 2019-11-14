@@ -14,6 +14,7 @@ $npm install
 ```
 載入資料至 Mongodb 完成後即可退出
 ```
+$cd ~AC-restaurantList/models/seeds
 $node restaurantSeeder.js
 ```
 開啟環境執行SERVER
