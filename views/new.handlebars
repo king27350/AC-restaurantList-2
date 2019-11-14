@@ -1,12 +1,34 @@
-<form action="/restaurants" method="POST">
-  <input type="text" placeholder="name" name="name">
-  <input type="text" placeholder="name_en" name="name_en">
-  <input type="text" placeholder="category" name="category">
-  <input type="text" placeholder="image" name="image">
-  <input type="text" placeholder="location" name="location">
-  <input type="text" placeholder="phone" name="phone">
-  <input type="text" placeholder="google_map" name="google_map">
-  <input type="text" placeholder="rating" name="rating">
-  <input type="text" placeholder="description" name="description">
-  <button type="submit">Create</button>
+<form class="mx-auto form-style" action="/restaurants" method="POST">
+  <fieldset id="input-new">
+    <legend>Edit area</legend>
+    <label for="name">Name:</label>
+    <input type="text" name="name"><br />
+
+    <label for="name_en">Eng Name:</label>
+    <input type="text" name="name_en"><br />
+
+    <label for="category">Category:</label>
+    <input type="text" name="category"><br />
+
+    <label for="image">Image:</label>
+    <input type="text" name="image"><br />
+
+    <label for="location">Location:</label>
+    <input type="text" name="location"><br />
+
+    <label for="phone">Phone:</label>
+    <input type="text" name="phone"><br />
+
+    <label for="google_map">Google_map:</label>
+    <input type="text" name="google_map"><br />
+
+    <label for="rating">Rating:</label>
+    <input type="text" name="rating"><br />
+
+    <label for="description">Description:</label>
+    <input type="text" name="description"><br />
+    <div>
+      <button class="btn btn-dark" type="submit">Create</button>
+    </div>
+  </fieldset>
 </form>
