@@ -2,7 +2,7 @@
   <fieldset id="input-new">
     <legend>Edit area</legend>
     <label for="name">Name:</label>
-    <input type="text" name="name"><br />
+    <input type="text" name="name" required><br />
 
     <label for="name_en">Eng Name:</label>
     <input type="text" name="name_en"><br />
@@ -27,8 +27,7 @@
 
     <label for="description">Description:</label>
     <input type="text" name="description"><br />
-    <div>
-      <button class="btn btn-dark" type="submit">Create</button>
-    </div>
+    <button class="btn btn-dark" type="submit">Create</button>
+    <button class="btn btn-dark" type="reset" value="Reset">Reset</button>
   </fieldset>
 </form>
