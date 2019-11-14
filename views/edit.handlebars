@@ -1,12 +1,38 @@
-<form action="/restaurants/{{restaurant.id}}/edit?_method=PUT" method="POST">
-  <input type="text" placeholder="name" name="name" value="{{restaurant.name}}">
-  <input type="text" placeholder="name_en" name="name_en" value="{{restaurant.name_en}}">
-  <input type=" text" placeholder="category" name="category" value="{{restaurant.category}}">
-  <input type=" text" placeholder="image" name="image" value="{{restaurant.image}}">
-  <input type=" text" placeholder="location" name="location" value="{{restaurant.location}}">
-  <input type=" text" placeholder="phone" name="phone" value="{{restaurant.phone}}">
-  <input type=" text" placeholder="google_map" name="google_map" value="{{restaurant.google_map}}">
-  <input type=" text" placeholder="rating" name="rating" value="{{restaurant.rating}}">
-  <input type=" text" placeholder="description" name="description" value="{{restaurant.description}}">
-  <button type=" submit">Create</button>
-</form>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-10 col-12 mx-auto">
+      <div class="card-columns">
+        <a href="/restaurants/{{ restaurant.id }}" class="text-secondary">
+          <div class="card mb-3">
+            <img class="card-img-top" src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
+            <div class="card-body p-3">
+              <h6 class="card-title mb-1">{{ restaurant.name }}</h6>
+              <div class="restaurant-category mb-1">
+                <i class="fas fa-utensils pr-2"></i> {{ restaurant.category }}
+              </div>
+              <span class="badge badge-pill badge-danger font-weight-normal">
+                {{ restaurant.rating }}
+                <i class="fas fa-star fa-xs"></i>
+              </span>
+              {{ restaurant.description }}
+            </div>
+          </div>
+        </a>
+        <form class="mx-auto form-style" action="/restaurants/{{restaurant.id}}/edit?_method=PUT" method="POST">
+          <fieldset id="input-new">
+            <input type="text" placeholder="name" name="name" value="{{restaurant.name}}">
+            <input type="text" placeholder="name_en" name="name_en" value="{{restaurant.name_en}}">
+            <input type=" text" placeholder="category" name="category" value="{{restaurant.category}}">
+            <input type=" text" placeholder="image" name="image" value="{{restaurant.image}}">
+            <input type=" text" placeholder="location" name="location" value="{{restaurant.location}}">
+            <input type=" text" placeholder="phone" name="phone" value="{{restaurant.phone}}">
+            <input type=" text" placeholder="google_map" name="google_map" value="{{restaurant.google_map}}">
+            <input type=" text" placeholder="rating" name="rating" value="{{restaurant.rating}}">
+            <input type=" text" placeholder="description" name="description" value="{{restaurant.description}}">
+            <button type=" submit">Create</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
