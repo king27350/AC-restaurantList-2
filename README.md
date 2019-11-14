@@ -1,6 +1,7 @@
 # 實做餐廳網站
 熟悉NPM套件與使用Express製做網站
 ![image](https://github.com/king27350/AC-restaurantList/blob/master/index_page.jpg?raw=true)
+---
 ## Installing 
 下載專案
 ```
