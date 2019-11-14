@@ -40,8 +40,8 @@ app.get('/restaurants', (req, res) => {
 })
 //列出分類後餐廳
 app.get('/restaurants/sort/:sort', (req, res) => {
-  console.log(req.params.sort)
-  if (!req.params.sort === Number) {
+  const sorting = req.params.sort
+  if (sorting === 'asc' || sorting === 'desc') {
     Restaurant.find({})
       .sort({ name: `${req.params.sort}` })
       .exec((err, restaurants) => {
