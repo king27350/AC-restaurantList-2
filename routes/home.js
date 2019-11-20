@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 const Restaurant = require('../models/restaurant')
 
+const { authenticated } = require('../config/auth')
+
 // 餐廳首頁
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   Restaurant.find((err, restaurants) => {
     //從資料庫隨機取1組餐廳
     const rnd = Math.floor(Math.random() * Math.floor(restaurants.length))
