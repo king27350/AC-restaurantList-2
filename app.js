@@ -31,6 +31,7 @@ app.use(methodOverride('_method'))
 // routes setting
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
+app.use('/user', require('./routes/user'))
 
 app.listen(port, () => {
   console.log(`express is listening on port:${port}`)
