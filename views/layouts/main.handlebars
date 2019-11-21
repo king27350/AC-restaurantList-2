@@ -24,8 +24,12 @@
           我的餐廳清單
         </a>
         <div>
-          <a class="btn btn-info" href="/restaurants/new">Create</a>
+          {{#if isAuthenticated}}
+          <a href="/restaurants/new" class="btn btn-info">Create</a>
+          <a class="btn btn-info" href="/users/logout">Logout</a>
+          {{else}}
           <a class="btn btn-info" href="/users/login">Login</a>
+          {{/if}}
         </div>
       </div>
     </nav>
