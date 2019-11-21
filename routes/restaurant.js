@@ -9,7 +9,7 @@ router.get('/', authenticated, (req, res) => {
 })
 // 搜尋 餐廳
 router.get('/search', authenticated, (req, res) => {
-  Restaurant.find((err, restaurants) => {
+  Restaurant.find({ _id: req.params.id, userId: req.user._id }, (err, restaurants) => {
     const keyword = req.query.keyword
     if (err) return console.error(err)
     const searchResult = restaurants.filter(restaurant => {
@@ -47,10 +47,11 @@ router.get('/sort/:sort', authenticated, (req, res) => {
 // 新增一筆 餐廳 頁面
 router.get('/new', authenticated, (req, res) => {
   return res.render('new')
+  // 使用 query string方法 做 search & sort 的分類 ，在search value 裡給個default值 再直接按取search btn 時候可以自動跑
 })
 // 顯示一筆 餐廳 的詳細內容
 router.get('/:id', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user._id }, (err, restaurant) => {
     if (err) return console.error(err)
     return res.render('detail', { restaurant: restaurant })
   })
@@ -59,6 +60,7 @@ router.get('/:id', authenticated, (req, res) => {
 router.post('/', authenticated, (req, res) => {
   const restaurant = new Restaurant({
     name: req.body.name,
+    userId: req.user._id,
     name_en: req.body.name_en,
     category: req.body.category,
     image: req.body.image,
@@ -75,14 +77,14 @@ router.post('/', authenticated, (req, res) => {
 })
 // 修改 餐廳 頁面
 router.get('/:id/edit', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user._id }, (err, restaurant) => {
     if (err) return console.error(err)
     return res.render('edit', { restaurant: restaurant })
   })
 })
 // 修改 餐廳
 router.put('/:id/edit', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user._id }, (err, restaurant) => {
     if (err) return console.error(err)
     restaurant.name = req.body.name,
       restaurant.name_en = req.body.name_en,
@@ -101,7 +103,7 @@ router.put('/:id/edit', authenticated, (req, res) => {
 })
 // 刪除 餐廳
 router.delete('/:id/delete', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user._id }, (err, restaurant) => {
     if (err) return console.error(err)
     restaurant.remove(err => {
       if (err) return console.error(err)

@@ -10,7 +10,7 @@ const passport = require('passport')
 // require mongoose
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 const db = mongoose.connection
 //require restaurant model
 const Restaurant = require('./models/restaurant')
@@ -43,8 +43,9 @@ app.use(passport.session())
 // 從./ config / passport.js 中 export 出來的是一個函式，它需要接收一個 Passport instance。所以在 require('./config/passport')(passport) 這行程式碼裡，我們將 passport 當作參數傳到./ config / passport.js 裡。
 require('./config/passport')(passport)
 app.use((req, res, next) => {
-  console.log(req.user, req.isAuthenticated())
   res.locals.user = req.user
+  res.locals.currentUser = req.user
+  //console.log(req.locals)
   res.locals.isAuthenticated = req.isAuthenticated()
   next()
 })
