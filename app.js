@@ -7,6 +7,11 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
 
+// 判別開發環境
+if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
+  require('dotenv').config()                      // 使用 dotenv 讀取 .env 檔案
+}
+
 // require mongoose
 const mongoose = require('mongoose')
 
@@ -54,6 +59,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auth'))
 
 app.listen(port, () => {
   console.log(`express is listening on port:${port}`)
