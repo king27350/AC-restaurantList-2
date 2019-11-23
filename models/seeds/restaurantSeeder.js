@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 const Restaurant = require('../restaurant')
-const data = require('/restaurant.json')
-// 帶入 dataUser 的資料
-// 跑回圈建立 user 資料
-// 第二次迴圈 判斷 user的值 有哪些 餐廳參數 需要加進 餐廳資料裡建立
-mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useUnifiedTopology: true })
+const User = require('../user')
+const data = require('./restaurant.json')
+const dataUser = require('./user.json')
+const bcrypt = require('bcryptjs')
+mongoose.connect('mongodb://localhost/restaurantList', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
 const db = mongoose.connection
 
@@ -14,19 +14,36 @@ db.on('error', () => {
 
 db.once('open', () => {
   console.log('db connected !')
-  for (let i = 0; i < 8; i++) {
-    Restaurant.create({
-      name: `${data.results[i].name}`,
-      name_en: `${data.results[i].name_en}`,
-      category: `${data.results[i].category}`,
-      image: `${data.results[i].image}`,
-      location: `${data.results[i].location}`,
-      phone: `${data.results[i].phone}`,
-      google_map: `${data.results[i].google_map}`,
-      rating: `${data.results[i].rating}`,
-      description: `${data.results[i].description}`,
+  //create user 
+  for (let j = 0; j < 2; j++) {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(dataUser.results[j].password, salt, (err, hash) => {
+        const newUser = new User({
+          name: dataUser.results[j].name,
+          email: dataUser.results[j].email,
+          password: hash  //注意型別與schema設定是否一至
+        })
+        newUser.save().then(user => {
+          // create restaurant list
+          for (let i = 0 + j * 3; i < (j + 1) * 3; i++) {
+            Restaurant.create({
+              name: `${data.results[i].name}`,
+              name_en: `${data.results[i].name_en}`,
+              category: `${data.results[i].category}`,
+              image: `${data.results[i].image}`,
+              location: `${data.results[i].location}`,
+              phone: `${data.results[i].phone}`,
+              google_map: `${data.results[i].google_map}`,
+              rating: `${data.results[i].rating}`,
+              description: `${data.results[i].description}`,
+              userId: `${user._id}`
+            })
+          }
+        })
+      })
     })
   }
+
   // 跑法布正確 需要再做一次檢查 不然只會快速console 字串 並沒辦法做到 檢查有沒有完整的帶入資料
-  console.log('done')
+  return console.log('done')
 })

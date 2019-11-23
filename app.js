@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('passport')
+const flash = require('connect-flash')
 
 // 判別開發環境
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
@@ -41,6 +42,7 @@ app.use(session({
   resave: false, //true -> 每次使用者互動後，強制把session更新到session store裡
   saveUninitialized: true  //強制將未初始化的session存回session store。未初始化表示這個 session 是新的而且沒有被修改過，例如未登入的使用者的 session。 
 }))
+app.use(flash())
 //透過 passport.initialize() 來初始化 Passport。而至於啟動 session 功能，就是使用passport.session()。注意：passport.session() 要放在 session() 之後，才能確保執行順序正確。
 app.use(passport.initialize())
 app.use(passport.session())
@@ -52,6 +54,8 @@ app.use((req, res, next) => {
   res.locals.currentUser = req.user
   //console.log(req.locals)
   res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 
