@@ -14,6 +14,8 @@ db.on('error', () => {
 
 db.once('open', () => {
   console.log('db connected !')
+
+
   //create user 
   for (let j = 0; j < 2; j++) {
     bcrypt.genSalt(10, (err, salt) => {
@@ -43,7 +45,14 @@ db.once('open', () => {
       })
     })
   }
+  // check function 
+  User.findOne({ email: 'user1@example.com' })
+    .then(user => Restaurant.find({ userId: `${user._id}` })
+      .then(restaurant => {
+        if (restaurant.length === 3) {
+          console.log('data done')
+        }
+      })
+    )
 
-  // 跑法布正確 需要再做一次檢查 不然只會快速console 字串 並沒辦法做到 檢查有沒有完整的帶入資料
-  return console.log('done')
 })
