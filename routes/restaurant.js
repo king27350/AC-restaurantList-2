@@ -7,10 +7,12 @@ const { authenticated } = require('../config/auth')
 router.get('/', authenticated, (req, res) => {
   return res.redirect('/')
 })
+// 使用 query string方法 做 search & sort 的分類 ，在search value 裡給個default值 再直接按取search btn 時候可以自動跑
 // 搜尋 餐廳
 router.get('/search', authenticated, (req, res) => {
-  Restaurant.find({ _id: req.params.id, userId: req.user._id }, (err, restaurants) => {
-    const keyword = req.query.keyword
+  const keyword = req.query.keyword
+  const sort = req.query.sort
+  Restaurant.find({ userId: req.user._id }).sort({ name: sort }).exec((err, restaurants) => {
     if (err) return console.error(err)
     const searchResult = restaurants.filter(restaurant => {
       return (
@@ -21,33 +23,36 @@ router.get('/search', authenticated, (req, res) => {
     })
     res.render('index', { restaurants: searchResult, keyword })
   })
-})
-
-//列出分類後餐廳
-router.get('/sort/:sort', authenticated, (req, res) => {
-  const sorting = req.params.sort
-  if (sorting === 'asc' || sorting === 'desc') {
-    Restaurant.find({})
-      .sort({ name: `${req.params.sort}` })
-      .exec((err, restaurants) => {
-        if (err) return console.error(err)
-        return res.render('index', { restaurants: restaurants })
-      })
-  } else {
-    Restaurant.find({})
-      .sort({ rating: `${req.params.sort}` })
-      .exec((err, restaurants) => {
-        if (err) return console.error(err)
-        return res.render('index', { restaurants: restaurants })
-      })
-  }
 
 })
+
+
+
+
+// //列出分類後餐廳
+// router.get('/sort/:sort', authenticated, (req, res) => {
+//   const sorting = req.params.sort
+//   if (sorting === 'asc' || sorting === 'desc') {
+//     Restaurant.find({})
+//       .sort({ name: `${req.params.sort}` })
+//       .exec((err, restaurants) => {
+//         if (err) return console.error(err)
+//         return res.render('index', { restaurants: restaurants })
+//       })
+//   } else {
+//     Restaurant.find({})
+//       .sort({ rating: `${req.params.sort}` })
+//       .exec((err, restaurants) => {
+//         if (err) return console.error(err)
+//         return res.render('index', { restaurants: restaurants })
+//       })
+//   }
+
+// })
 
 // 新增一筆 餐廳 頁面
 router.get('/new', authenticated, (req, res) => {
   return res.render('new')
-  // 使用 query string方法 做 search & sort 的分類 ，在search value 裡給個default值 再直接按取search btn 時候可以自動跑
 })
 // 顯示一筆 餐廳 的詳細內容
 router.get('/:id', authenticated, (req, res) => {
