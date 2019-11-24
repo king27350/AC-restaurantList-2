@@ -1,6 +1,20 @@
 # 實做餐廳網站
+![login](https://github.com/king27350/AC-restaurantList-2/blob/master/pictures/index_page.jpg?raw=true)
 
 ---
+
+## 建構環境與使用套件
++ Node js
+  - bcryptjs
+  - passport 
+  - passport-google-oauth20
+  - passport-facebook
+  - passport-local
+  - connect-flash
+  - dotenv
+  - express-session
++ Mongodb
+
 ## Installing 
 下載專案
 ```
@@ -40,6 +54,9 @@ GOOGLE_CALLBACK=http://localhost:3000/auth/google/callback
 **環境建置完畢**
 
 ---
+
+![login](https://github.com/king27350/AC-restaurantList-2/blob/master/pictures/login_page.jpg?raw=true)
+
 開啟環境執行SERVER
 ```
 $npm run dev
@@ -56,19 +73,6 @@ http://localhost:3000
 | user2@example.com | 12345678 |
 
 如要結束，於終端機輸入 ```ctrl + C``` 終止 
-### 建構環境與使用套件
-+ Node js
-bcryptjs
-passport 
-passport-google-oauth20
-passport-facebook
-passport-local
-connect-flash
-dotenv
-express-session
-+ Mongodb
-
-  
 
 #### 功能描述
 + 尋找特定餐廳
