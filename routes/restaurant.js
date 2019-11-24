@@ -7,8 +7,7 @@ const { authenticated } = require('../config/auth')
 router.get('/', authenticated, (req, res) => {
   return res.redirect('/')
 })
-// 使用 query string方法 做 search & sort 的分類 ，在search value 裡給個default值 再直接按取search btn 時候可以自動跑
-// 搜尋 餐廳
+// 搜尋 與分類 餐廳
 router.get('/search', authenticated, (req, res) => {
   const keyword = req.query.keyword
   const sort = req.query.sort
@@ -26,29 +25,6 @@ router.get('/search', authenticated, (req, res) => {
 
 })
 
-
-
-
-// //列出分類後餐廳
-// router.get('/sort/:sort', authenticated, (req, res) => {
-//   const sorting = req.params.sort
-//   if (sorting === 'asc' || sorting === 'desc') {
-//     Restaurant.find({})
-//       .sort({ name: `${req.params.sort}` })
-//       .exec((err, restaurants) => {
-//         if (err) return console.error(err)
-//         return res.render('index', { restaurants: restaurants })
-//       })
-//   } else {
-//     Restaurant.find({})
-//       .sort({ rating: `${req.params.sort}` })
-//       .exec((err, restaurants) => {
-//         if (err) return console.error(err)
-//         return res.render('index', { restaurants: restaurants })
-//       })
-//   }
-
-// })
 
 // 新增一筆 餐廳 頁面
 router.get('/new', authenticated, (req, res) => {
